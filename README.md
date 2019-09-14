@@ -10,11 +10,15 @@ The project consists of a few parts:
 
 ## The logic behind the sequencer
 
-Each of the six (6) buttons is programmed to trigger a sequence consisting of four (4) bars, each of which containing four (4) beats, which in turn are divided into four (4) notes.
+Each of the six (6) buttons connected to the Arduino's INPUT pins is programmed to trigger a sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
 
-To circumvent the limitations imposed by the hardware, the program is set up to listen for activity (HIGH) on the INPUT buttons after each bar, allowing to respond depending of the following situations:
+Each note is defined by the `note()` function, which specifies the OUTPUT pin to activate, as well as how long it stays HIGH and LOW. All three parameters may have a value of 0, creating an empty note without going off beat.
 
-* If 
+To circumvent the limitations imposed by the hardware, the program calls the pick() function after every beat. pick() is set up to listen for activity (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
+
+* If no INPUT pin is HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end.
+* If the same INPUT pin that triggered the current sequence is HIGH, said sequence restarts from the beginning.
+* A different INPUT pin triggers that pin's sequence.
 
 Each of the 4 (four) pads is independently wired to be triggered by Arduino's OUTPUT pins 10 through 13 following a sequencer pattern stored in memory. The sequencer in turn is triggered by INPUT pins A0 through A5.
 
