@@ -5,21 +5,25 @@ Rebobinoide
 
 The project consists of a few parts:
 * A sequencer/drum machine program stored in the Arduino's flash memory.
-* An array of four (4) AM-FM radios modified to individually switch on and off through triggering pulses produced by four (4) of Arduino's digital OUTPUT pins.
+
+* An array of four (4) AM-FM radios modified to individually switch on and off through triggering pulses produced by four (4) of Arduino's digital output pins.
+
 * A Yamaha DD-35 Drum Kit whose pads have been wired for external activation using opto-couplers- in addition to the factory triggering by striking - through a female VGA connector.
 
 ## The logic behind the sequencer
 
-Each of the six (6) buttons connected to the Arduino's INPUT pins is programmed to trigger a sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
+Each of the six (6) buttons connected to the Arduino's input pins is programmed to trigger a sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
 
-Each note is defined by the `note()` function, which takes 3 arguments to specify the OUTPUT pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
+Each note is defined by the `note()` function, which takes 3 arguments to specify the output pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
 
-Upon power-on, `initial()` calls `check()`, which polls the INPUT pins for the first one to display a HIGH state. Such HIGH pin triggers the first corresponding sequence with `seq()`.
+Power-on calls `initial()`, in turn calling `check()`, which polls the input pins for the first one to display a HIGH state. Such HIGH pin triggers the first corresponding sequence with `seq()`.
 
-To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat. , which reads the INPUT pins (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
+To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat - , which also calls `check()` to listen for HIGH input pins - if any - allowing the sequence to respond to the following situations:
 
 * If no INPUT pin is HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end.
+
 * If the same INPUT pin that triggered the current sequence is HIGH, said sequence restarts from the beginning.
+
 * A different INPUT pin triggers that pin's sequence.
 
 Each of the 4 (four) pads is independently wired to be triggered by Arduino's OUTPUT pins 10 through 13 following a sequencer pattern stored in memory. The sequencer in turn is triggered by INPUT pins A0 through A5.
