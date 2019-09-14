@@ -3,7 +3,10 @@ Rebobinoide
 
 ![38461330_1378488775618051_1496400106671308800_n](https://user-images.githubusercontent.com/55008098/64902170-50f14a00-d657-11e9-9160-7df829bea61e.jpg)
 
-The project revolves around a modified Yamaha whose pads have been wired for external activation - in addition to triggering by hitting - through a female VGA connector.
+The project consists of a few parts:
+* A sequencer/drum machine program in the Arduino.
+* An array of four AM-FM radios modified to switch on and off through pulses produced by four OUTPUT pins.
+* A Yamaha DD-35 whose pads have been wired for external activation - in addition to triggering by hitting - through a female VGA connector.
 
 ## Arduino
 
