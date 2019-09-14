@@ -10,8 +10,11 @@ The project consists of a few parts:
 
 ## The logic behind the sequencer
 
-Each of the six (6) buttons is programmed to trigger a sequence consisting of four (4) bars, each of which consist of four (4) beats, which in  are divided into four (4) notes.
-To circumvent the limitations imposed by the hardware, e
+Each of the six (6) buttons is programmed to trigger a sequence consisting of four (4) bars, each of which containing four (4) beats, which in turn are divided into four (4) notes.
+
+To circumvent the limitations imposed by the hardware, the program is set up to listen for activity (HIGH) on the INPUT buttons after each bar, allowing to respond depending of the following situations:
+
+* If 
 
 Each of the 4 (four) pads is independently wired to be triggered by Arduino's OUTPUT pins 10 through 13 following a sequencer pattern stored in memory. The sequencer in turn is triggered by INPUT pins A0 through A5.
 
