@@ -14,9 +14,13 @@ The project consists of a few parts:
 
 Each of the six (6) buttons connected to the Arduino's input pins is programmed to trigger a sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
 
-Each note is defined by the `note()` function, which takes 3 arguments to specify the output pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
-
 Power-on calls `initial()`, in turn calling `check()`, which polls the input pins for the first one to display a HIGH state. Such HIGH pin triggers the first corresponding sequence with `seq()`.
+
+`seq()` calls `line()`, which takes as parameter the array `s[6][4][8]`, calling its subarrays - containing the sequences, bars and notes 
+
+
+
+Each note is defined by the `note()` function, which takes 3 arguments to specify the output pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
 
 To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat - , which also calls `check()` to listen for HIGH input pins - if any - allowing the sequence to respond to the following situations:
 
