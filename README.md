@@ -14,9 +14,9 @@ Each of the six (6) buttons connected to the Arduino's INPUT pins is programmed 
 
 Each note is defined by the `note()` function, which takes 3 arguments to specify the OUTPUT pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
 
-The program monitors the INPUT pins, listening for the first HIGH state and activating `initial()`, which triggers the first sequence.
+Upon power-on, `initial()` calls `check()`, which polls the INPUT pins for the first one to display a HIGH state. Such HIGH pin triggers the first corresponding sequence with `seq()`.
 
-To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat. `pick()` receives its input from `check`, which reads the INPUT pins (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
+To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat. , which reads the INPUT pins (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
 
 * If no INPUT pin is HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end.
 * If the same INPUT pin that triggered the current sequence is HIGH, said sequence restarts from the beginning.
