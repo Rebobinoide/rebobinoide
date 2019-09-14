@@ -12,9 +12,11 @@ The project consists of a few parts:
 
 Each of the six (6) buttons connected to the Arduino's INPUT pins is programmed to trigger a sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
 
-Each note is defined by the `note()` function, which specifies the OUTPUT pin to activate, as well as how long it stays HIGH and LOW. All three parameters may have a value of 0, creating an empty note without going off beat.
+Each note is defined by the `note()` function, which takes 3 arguments to specify the OUTPUT pin to activate, as well as how long it stays HIGH, and how many times it is triggered within the space of one note. All three parameters may have a value of 0, creating an empty note without going off beat.
 
-To circumvent the limitations imposed by the hardware, the program calls the pick() function after every beat. pick() is set up to listen for activity (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
+The program monitors the INPUT pins, listening for the first HIGH state and activating `initial()`, which triggers the first sequence.
+
+To circumvent the limitations imposed by the hardware, the program calls the `pick()` function after every beat. `pick()` receives its input from `check`, which reads the INPUT pins (HIGH) on the INPUT buttons after each beat, allowing the sequence to respond depending on the following situations:
 
 * If no INPUT pin is HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end.
 * If the same INPUT pin that triggered the current sequence is HIGH, said sequence restarts from the beginning.
