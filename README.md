@@ -1,8 +1,8 @@
-## Rebobinoide
-- Primero
-- Segundo
-- Terero
+Rebobinoide 
+===========
+The project revolves around a modified Yamaha whose pads have been wired for external activation - as opposed to triggering by hitting - through a female VGA connector.
 
--------
+##Arduino
 
-Go to [Google.com](www.google.com)
+
+
