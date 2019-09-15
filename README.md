@@ -49,16 +49,6 @@ Each note is defined by the `note()` function, which takes 3 arguments to specif
 
 Each of the 4 (four) pads is independently wired to be triggered by Arduino's OUTPUT pins 10 through 13 following a sequencer pattern stored in memory. The sequencer in turn is triggered by INPUT pins A0 through A5.
 
-Functions
-=========
-
-## initial()
-Triggers first sequence as per input pin returned by check()
-
-## check()
-Checks each of the 6 inputs and returns the pin number that's HIGH.
-
-
 
 
 
