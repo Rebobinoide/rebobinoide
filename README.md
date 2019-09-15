@@ -11,11 +11,13 @@ The project consists of a few parts:
 
 * A Yamaha DD-35 Drum Kit whose pads have been wired for external activation using opto-couplers- in addition to the factory triggering by striking - through a female VGA connector.
 
+All the elements are also connected to the Arduino GND pin, of course.
+
 ## Overview
 
 Each of the six (6) buttons connected to the Arduino's input pins is programmed to trigger a rhythm sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
 
-Here comes the tricky part. Partly to circumvent the limitations imposed by the hardware, each of the 6 sequences triggered is set to stop after every beat to check which of the input buttons is pressed (HIGH), if any. The `pick()` function then takes actions based on any of four conditions: 
+Here comes the tricky part. Partly to circumvent the limitations imposed by the hardware, each of the 6 sequences triggered is set to stop after every beat to check which of the input buttons is pressed (HIGH), if any. The `pick()` function then takes actions based on any of four conditions:
 
 * If no input pin reads HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end, if all input pins remain LOW throughout the sequence.
 
@@ -27,13 +29,21 @@ Here comes the tricky part. Partly to circumvent the limitations imposed by the 
 
 Power-on calls `loop()`'s `initial()`, which runs`check()`to poll the input pins for the first one to display a HIGH state. `initial` then sets global variables `bar` and `beat` (which keep track of the bars and beats, obviously) to 0 and `before` and `after` to whatever sequence is returned by `check()`. These variables keep track of the current sequence (last button pressed) and the new one. 
 
-NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are initialized that way at the top is so that it resets those values everytime it is called.
+NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are initialized that way at the top is so that it resets their values everytime it is called, i.e., at the end of the cycle.
 
-`initial()` then calls the `seq()` function, which is made up of a while loop that limits the bar count to four (4) and contains a switch/case loop based on the variable `beat`.
+`initial()` then calls the `seq()` function, which is made up of a while loop that limits the bar count to four (4) and contains a switch/case loop based on the variable `beat`. This pretty much defines the 4 beats to each of 4 bars pattern.
 
-Each case (0-3) triggers the `line()` function, which takes as parameter the multi-dimensional array `s` `s[after][bar][beat]` and its subarrays containing any of 6 sequences made up of 4 bars with 4 beats and 4 notes each. Each subarray containing the notes actually has eight (8) elements that represent individual notes in output pin/times triggered pairs. 
+Each case of `beat` (0-3) triggers the `line()` function, which takes as parameter the sub-array `s[after][bar][beat]` containing 8 `ints`. 
 
-Each instance of `s` called by `line()` takes as index parameters the variables `after`, `bar` and `beat`. `after` refers to 
+* It is imperative to mention that the 4-dimensional array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes.
+
+Using a `for` loop, `line()` then passes the 8-element array to 4 iterations of `note()`, each one taking the values in pairs, i.e. `note(array[i], array[i+1])`, and incrementing i by 2 after each iteration. The two arguments that `note()` takes in determine which output pin goes HIGH and how many times within one note space, respectively.
+
+
+
+`s[after][bar][beat]` and its subarrays containing any of 6 sequences made up of 4 bars with 4 beats and 4 notes each. Each subarray containing the notes actually has eight (8) elements that represent individual notes in output pin/times triggered pairs. 
+
+
 
 
 
