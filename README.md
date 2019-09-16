@@ -1,8 +1,9 @@
-Rebobinoide 
+### Rebobinoide 
 ===========
 
 ![38461330_1378488775618051_1496400106671308800_n](https://user-images.githubusercontent.com/55008098/64902170-50f14a00-d657-11e9-9160-7df829bea61e.jpg)
 
+## Physical equipment
 The project consists of a few parts:
 
 * A sequencer/drum machine program stored in the Arduino's flash memory.
@@ -33,22 +34,22 @@ Here comes the tricky part. Partly to circumvent the limitations imposed by the 
 ## The logic
 
 
-Power-on calls `loop()`'s `initial()`, which runs`check()`to poll the input pins for the first one to display a HIGH state. `initial` then sets global variables `bar` and `beat` (which keep track of the bars and beats, obviously) to 0 and `before` and `after` to whatever sequence is returned by `check()`. These variables keep track of the current sequence (last button pressed) and the new one. 
+Power-on calls `loop()`'s `initial()`, which runs`check()` to poll the input pins for the first one to display a HIGH state. `initial` then sets global variables `bar` and `beat` (which keep track of the bars and beats, obviously) to 0 and `before` and `after` to whatever sequence is returned by `check()`. These variables keep track of the current sequence (last button pressed) and the new one. More on this later.
 
 
-NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are initialized that way at the top is so that it resets their values everytime it is called, i.e., at the end of the cycle.
+NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are initialized that way at the top is so that it resets their values everytime it is called, i.e., at the end of full cycle.
 
 
-`initial()` then calls the `seq()` function, which is made up of a while loop that limits the bar count to four (4) and contains a switch/case loop based on the variable `beat`. This pretty much defines the 4 beats to each of 4 bars pattern.
+`initial()` then triggers the first sequence by calling the `seq()` function. `seq()` is is made up of a `while` loop that limits the bar count to four (4). The `while` loop in turn contains a `switch/case` loop based on the variable `beat`. This pretty much defines the pattern of 4 beats to 4 bars.
 
 
 Each case of `beat` (0-3) triggers the `line()` function, which takes as parameter the sub-array `s[after][bar][beat]` containing 8 `ints`. 
 
 
-> It is imperative to mention that the 4-dimensional array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes.
+> It is imperative to mention that the 4-dimensional global array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The last 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes on `s[][][][]`.
 
 
-Using a `for` loop, `line()` then passes the 8-element array to 4 iterations of `note()`, each one taking the values in pairs, i.e. `note(array[i], array[i+1])`, and incrementing i by 2 after each iteration. The two arguments that `note()` takes in determine which output pin goes HIGH and how many times within one note space, respectively.
+Using a `for` loop, `line()` then passes the 8-element array to 4 iterations of `note()`, each one taking the values in pairs, i.e. `note(array[i], array[i+1])`, and incrementing i by 2 after each iteration. The two arguments that `note()` takes in determine which output pin goes HIGH and how many times it is activated, respectively. To create an empty note, I simply set the times parameter to 0.
 
 
 
@@ -72,7 +73,7 @@ Each of the 4 (four) pads is independently wired to be triggered by Arduino's OU
 
 
 
-
+https://www.khanacademy.org/humanities/music/music-basics2/notes-rhythm/v/lesson-1-note-values-duration-and-time-signatures
 
 
 
