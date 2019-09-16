@@ -15,27 +15,38 @@ All the elements are also connected to the Arduino GND pin, of course.
 
 ## Overview
 
+
 Each of the six (6) buttons connected to the Arduino's input pins is programmed to trigger a rhythm sequence consisting of four (4) bars. Each bar is made up of four (4) beats, which in turn are divided into four (4) notes. 
+
 
 Here comes the tricky part. Partly to circumvent the limitations imposed by the hardware, each of the 6 sequences triggered is set to stop after every beat to check which of the input buttons is pressed (HIGH), if any. The `pick()` function then takes actions based on any of four conditions:
 
+
 * If no input pin reads HIGH, the sequence continues to the next beat and eventually the next bar and so on until the sequence reaches the end, if all input pins remain LOW throughout the sequence.
 
+
 * If the same input pin that triggered the current sequence is HIGH, said sequence restarts from the beginning of the current bar, which is being tracked by the global variable `bar`.
+
 
 * A different input pin's HIGH state pin triggers the corresponding sequence starting at the first bar.
 
 ## The logic
 
+
 Power-on calls `loop()`'s `initial()`, which runs`check()`to poll the input pins for the first one to display a HIGH state. `initial` then sets global variables `bar` and `beat` (which keep track of the bars and beats, obviously) to 0 and `before` and `after` to whatever sequence is returned by `check()`. These variables keep track of the current sequence (last button pressed) and the new one. 
+
 
 NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are initialized that way at the top is so that it resets their values everytime it is called, i.e., at the end of the cycle.
 
+
 `initial()` then calls the `seq()` function, which is made up of a while loop that limits the bar count to four (4) and contains a switch/case loop based on the variable `beat`. This pretty much defines the 4 beats to each of 4 bars pattern.
+
 
 Each case of `beat` (0-3) triggers the `line()` function, which takes as parameter the sub-array `s[after][bar][beat]` containing 8 `ints`. 
 
+
 > It is imperative to mention that the 4-dimensional array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes.
+
 
 Using a `for` loop, `line()` then passes the 8-element array to 4 iterations of `note()`, each one taking the values in pairs, i.e. `note(array[i], array[i+1])`, and incrementing i by 2 after each iteration. The two arguments that `note()` takes in determine which output pin goes HIGH and how many times within one note space, respectively.
 
