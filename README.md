@@ -35,7 +35,7 @@ NOTE: The reason `initial()` sets `bar` and `beat` to 0 even though they are ini
 
 Each case of `beat` (0-3) triggers the `line()` function, which takes as parameter the sub-array `s[after][bar][beat]` containing 8 `ints`. 
 
-* It is imperative to mention that the 4-dimensional array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes.
+> It is imperative to mention that the 4-dimensional array `s[6][4][4][8]` contains all 6 sequences with each one's respective bars, beats and notes sub-arrays. The 8-element sub-array carrying the individual notes is called using `after`, `bar` and `beat` as indexes.
 
 Using a `for` loop, `line()` then passes the 8-element array to 4 iterations of `note()`, each one taking the values in pairs, i.e. `note(array[i], array[i+1])`, and incrementing i by 2 after each iteration. The two arguments that `note()` takes in determine which output pin goes HIGH and how many times within one note space, respectively.
 
