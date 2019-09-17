@@ -1,6 +1,8 @@
 Rebobinoide 
 ===========
 
+Rebobinoide is an Arduino project consisting of a music sequencer able to trigger any sound-making electronic artifact, including AM-FM radios, toys and old drum machines (provided they've been properly circuit bent to that effect).
+
 ![38461330_1378488775618051_1496400106671308800_n](https://user-images.githubusercontent.com/55008098/64902170-50f14a00-d657-11e9-9160-7df829bea61e.jpg)
 
 ## Physical equipment
